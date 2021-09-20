@@ -22,23 +22,35 @@ typedef union s_color
 	struct
 	{
 		uint8_t alpha: 8;
-		uint8_t red: 8;
 		uint8_t green: 8;
+		uint8_t red: 8;
 		uint8_t blue: 8;
 	};
 }	t_color;
 
-typedef struct complex
+typedef struct s_complex
 {
 	double re;
 	double im;
 } 				t_complex;
 
-typedef struct	s_vars {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_data	*img;
+typedef struct s_fractol
+{
+	int calibrate;
+	int move_rl;
+	int move_ud;
+	t_color color;
+}	t_fractol;
+
+typedef struct	s_vars
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_data		*img;
+	t_fractol	*fractol;
 }				t_vars;
+
+
 
 t_complex complex_sum(t_complex num1, t_complex num2);
 double complex_module(t_complex num);
