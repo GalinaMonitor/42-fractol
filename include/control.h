@@ -32,3 +32,30 @@
 # define SHIFT					0.11
 
 #endif
+
+// 0L		NoEventMask
+// (1L<<0)	KeyPressMask
+// (1L<<1)	KeyReleaseMask
+// (1L<<2)	ButtonPressMask
+// (1L<<3)	ButtonReleaseMask
+// (1L<<4)	EnterWindowMask
+// (1L<<5)	LeaveWindowMask
+// (1L<<6)	PointerMotionMask
+// (1L<<7)	PointerMotionHintMask
+// (1L<<8)	Button1MotionMask
+// (1L<<9)	Button2MotionMask
+// (1L<<10)	Button3MotionMask
+// (1L<<11)	Button4MotionMask
+// (1L<<12)	Button5MotionMask
+// (1L<<13)	ButtonMotionMask
+// (1L<<14)	KeymapStateMask
+// (1L<<15)	ExposureMask
+// (1L<<16)	VisibilityChangeMask
+// (1L<<17)	StructureNotifyMask
+// (1L<<18)	ResizeRedirectMask
+// (1L<<19)	SubstructureNotifyMask
+// (1L<<20)	SubstructureRedirectMask
+// (1L<<21)	FocusChangeMask
+// (1L<<22)	PropertyChangeMask
+// (1L<<23)	ColormapChangeMask
+// (1L<<24)	OwnerGrabButtonMask
