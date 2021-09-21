@@ -2,6 +2,7 @@
 # define FRACTOL_H
 
 # include "../mlx/mlx.h"
+# include "../lib/libft/libft/libft.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -21,10 +22,10 @@ typedef union s_color
 	int color;
 	struct
 	{
-		uint8_t alpha: 8;
 		uint8_t green: 8;
 		uint8_t red: 8;
 		uint8_t blue: 8;
+		uint8_t alpha: 8;
 	};
 }	t_color;
 
@@ -48,6 +49,7 @@ typedef struct	s_vars
 	void		*win_ptr;
 	t_data		*img;
 	t_fractol	*fractol;
+	int (*fractol_func) (struct s_vars *);
 }				t_vars;
 
 
@@ -56,4 +58,12 @@ t_complex complex_sum(t_complex num1, t_complex num2);
 double complex_module(t_complex num);
 t_complex complex_square(t_complex num);
 
+int	wheel_hook(int keybord, int x, int y, t_vars *vars);
+int	keyboard_hook(int keybord, t_vars *vars);
+int	wheel_hook(int wheel, int x, int y, t_vars *vars);
+int	close_window(t_vars *vars);
+void info(t_vars *vars);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int	draw_julia(t_vars *vars);
+int	draw_mandelbrot(t_vars *vars);
 #endif

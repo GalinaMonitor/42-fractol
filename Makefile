@@ -15,7 +15,7 @@ LIBMLX_DIR = mlx/
 LIBFT_DIR = lib/libft/libft/
 LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
 
-FRACTOL_SRC = fractol.c cmplx_math.c
+FRACTOL_SRC = fractol.c cmplx_math.c main.c mandelbrot.c julia.c graphic.c control.c
 FRACTOL_INC = fractol.h
 
 SRC = $(addprefix $(SRC_DIR), $(FRACTOL_SRC))
