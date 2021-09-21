@@ -10,7 +10,7 @@ INC_DIR = include/
 WORK_DIR = $(addprefix ../, $(NAME))
 
 LIBMLX =	$(addprefix $(LIBMLX_DIR), libmlx.a)
-LIBMLX_DIR = mlx/
+LIBMLX_DIR = mlx_linux/
 
 LIBFT_DIR = lib/libft/libft/
 LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
@@ -24,12 +24,22 @@ OBJ = $(patsubst %.c, %.o, $(SRC))
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIBMLX) $(OBJ)
-	$(CC) $(OBJ) -o $@ $(LDFLAGS)
-	@echo "fractol is ready to use"
+# $(NAME): $(LIBFT) $(LIBMLX) $(OBJ)
+# 	$(CC) $(OBJ) -o $@ $(LDFLAGS)
+# 	@echo "fractol is ready to use"
 
-%.o : %.c $(INC)
-	$(CC) $(FLAGS) -g -I$(INC_DIR) -I$(LIBMLX_DIR) -c $< -o $@
+# $(NAME): $(LIBFT) $(LIBMLX) $(OBJ)
+# 	$(CC) $(OBJ) -o $@ $(LDFLAGS)
+# 	@echo "fractol is ready to use"
+
+$(NAME): $(LIBFT) $(LIBMLX) $(OBJ)
+	$(CC) $(OBJ) $(LIBFT) -o  $@ -g -Lmlx_linux -lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+
+# %.o : %.c $(INC)
+# 	$(CC) $(FLAGS) -g -I$(INC_DIR) -I$(LIBMLX_DIR) -c $< -o $@
+
+%.o: %.c
+	$(CC) -I$(INC_DIR) -Imlx_linux -O3 -c $< -o $@
 
 $(LIBFT) :
 	$(MAKE) -C $(LIBFT_DIR)

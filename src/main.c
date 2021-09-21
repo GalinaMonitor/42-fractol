@@ -8,9 +8,9 @@ int main(int argc, char **argv)
 	t_fractol fractol;
 	int color;
 	// if (ft_strncmp(argv[1], "julia", 20) == 0)
-		vars.fractol_func = draw_julia;
+		// vars.fractol_func = draw_julia;
 	// if (ft_strncmp(argv[1], "mandelbrot", 20) == 0)
-	// 	vars.fractol_func = draw_mandelbrot;
+		// vars.fractol_func = draw_mandelbrot;
 
 	fractol.calibrate = 100;
 	fractol.color.color = 0;

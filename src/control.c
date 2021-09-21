@@ -3,6 +3,7 @@
 
 int	keyboard_hook(int keybord, t_vars *vars)
 {
+	ft_putnbr_fd(keybord, 1);
 	if (keybord == KEY_ESC)
 		close_window(vars);
 	if (keybord == KEY_UP)
@@ -45,6 +46,7 @@ int	keyboard_hook(int keybord, t_vars *vars)
 
 int	wheel_hook(int wheel, int x, int y, t_vars *vars)
 {
+	write(1, "h", 1);
 	if (wheel == SCROLL_UP || wheel == SCROLL_DOWN)
 	{
 		if (wheel == SCROLL_DOWN)
