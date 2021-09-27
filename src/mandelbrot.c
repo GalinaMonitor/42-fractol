@@ -1,13 +1,16 @@
 #include <fractol.h>
 #include <control.h>
 
-int	draw_mandelbrot(t_vars *vars)
+void	draw_mandelbrot_thread(t_vars *vars)
 {
-	double x = 0;
+	int count_iter = vars->fractol->iter_pthread;
+	vars->fractol->iter_pthread += 1;
+
+	double x = 100 * count_iter;
 	double y = 0;
 	double a = 0;
 	double b = 0;
-	int iter = 50;
+	int iter = vars->fractol->iter;
 
 	int red = vars->fractol->color.red;
 	int green = vars->fractol->color.green;
@@ -18,7 +21,7 @@ int	draw_mandelbrot(t_vars *vars)
 	t_color color;
 	int callibrate = vars->fractol->calibrate;
 
-	while (x < 800)
+	while (x < 100 * count_iter + 100)
 	{
 		while (y < 800)
 		{
@@ -45,12 +48,27 @@ int	draw_mandelbrot(t_vars *vars)
 				my_mlx_pixel_put(vars->img, x, y, color.color);
 				color.color = 0;
 			}
-			iter = 50;
+			iter = vars->fractol->iter;
 			y++;
 		}
 		y = 0;
 		x++;
 	}
+}
+
+int	draw_mandelbrot(t_vars *vars)
+{
+	int count = 0;
+
+	vars->fractol->iter_pthread = 0;
+	pthread_t tid[8];
+	while (count < 8)
+	{
+		pthread_create(&tid[count], NULL, (void *(*) (void *))draw_mandelbrot_thread, vars);
+		count++;
+	}
+	while (count-- > 0)
+		pthread_join(tid[count], NULL);
 	mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, vars->img->img, 0, 0);
 	info(vars);
 	return 0;

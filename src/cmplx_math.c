@@ -23,3 +23,12 @@ t_complex complex_sum(t_complex num1, t_complex num2)
 	result.im = num1.im + num2.im;
 	return result;
 }
+
+t_complex complex_abs(t_complex num)
+{
+	if (num.re < 0)
+		num.re *= -1;
+	if (num.im < 0)
+		num.im *= -1;
+	return num;
+}

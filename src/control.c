@@ -3,7 +3,6 @@
 
 int	keyboard_hook(int keybord, t_vars *vars)
 {
-	ft_putnbr_fd(keybord, 1);
 	if (keybord == KEY_ESC)
 		close_window(vars);
 	if (keybord == KEY_UP)
@@ -26,7 +25,18 @@ int	keyboard_hook(int keybord, t_vars *vars)
 		vars->fractol->move_rl += 50;
 		vars->fractol_func(vars);
 	}
-
+	if (keybord == KEY_Z)
+	{
+		vars->fractol->iter -= 10;
+		if (vars->fractol->iter < 10)
+			vars->fractol->iter = 10;
+		vars->fractol_func(vars);
+	}
+	if (keybord == KEY_X)
+	{
+		vars->fractol->iter += 10;
+		vars->fractol_func(vars);
+	}
 	if (keybord == KEY_C)
 	{
 		vars->fractol->color.red = rand() % 20;
@@ -36,9 +46,7 @@ int	keyboard_hook(int keybord, t_vars *vars)
 	}
 	if (keybord == KEY_MINUS)
 	{
-		vars->fractol->calibrate = 100;
-		vars->fractol->move_rl = 0;
-		vars->fractol->move_ud = 0;
+		default_settings(vars);
 		vars->fractol_func(vars);
 	}
 	return 0;
@@ -46,7 +54,6 @@ int	keyboard_hook(int keybord, t_vars *vars)
 
 int	wheel_hook(int wheel, int x, int y, t_vars *vars)
 {
-	write(1, "h", 1);
 	if (wheel == SCROLL_UP || wheel == SCROLL_DOWN)
 	{
 		if (wheel == SCROLL_DOWN)
@@ -63,7 +70,6 @@ int	wheel_hook(int wheel, int x, int y, t_vars *vars)
 			if (vars->fractol->calibrate < 0)
 				vars->fractol->calibrate = 1;
 		}
-
 		vars->fractol_func(vars);
 	}
 	return 0;
@@ -74,5 +80,13 @@ int	close_window(t_vars *vars)
 	write(1, "Exit\n", 5);
 	mlx_destroy_window(vars->mlx_ptr, vars->win_ptr);
 	exit(0);
+	return 0;
+}
+
+int	motion_hook(int x, int y, t_vars *vars)
+{
+	vars->fractol->mouse_rl = ((double)x - 400)/200;
+	vars->fractol->mouse_ud = (400 - (double)y)/200;
+	vars->fractol_func(vars);
 	return 0;
 }

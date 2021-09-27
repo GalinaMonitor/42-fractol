@@ -1,7 +1,7 @@
 #include <fractol.h>
 #include <control.h>
 
-void	draw_julia_thread(t_vars *vars)
+void	draw_ship_thread(t_vars *vars)
 {
 	int count_iter = vars->fractol->iter_pthread;
 	vars->fractol->iter_pthread += 1;
@@ -20,18 +20,20 @@ void	draw_julia_thread(t_vars *vars)
 	t_complex zero;
 	t_color color;
 	int callibrate = vars->fractol->calibrate;
+
 	while (x < 100 * count_iter + 100)
 	{
 		while (y < 800)
 		{
 			b = (x - 800/2 - vars->fractol->move_rl)/callibrate;
 			a = (800/2 - y + vars->fractol->move_ud)/callibrate;
-			zero.im = a;
-			zero.re = b;
-			num.im = vars->fractol->mouse_ud;
-			num.re = vars->fractol->mouse_rl;
+			zero.im = 0;
+			zero.re = 0;
+			num.re = b;
+			num.im = -a;
 			while (iter--)
 			{
+				zero = complex_abs(zero);
 				zero = complex_square(zero);
 				zero = complex_sum(zero, num);
 				if (complex_module(zero) > 2)
@@ -55,7 +57,7 @@ void	draw_julia_thread(t_vars *vars)
 	}
 }
 
-int	draw_julia(t_vars *vars)
+int	draw_ship(t_vars *vars)
 {
 	int count = 0;
 
@@ -63,7 +65,7 @@ int	draw_julia(t_vars *vars)
 	pthread_t tid[8];
 	while (count < 8)
 	{
-		pthread_create(&tid[count], NULL, (void *(*) (void *))draw_julia_thread, vars);
+		pthread_create(&tid[count], NULL, (void *(*) (void *))draw_ship_thread, vars);
 		count++;
 	}
 	while (count-- > 0)
