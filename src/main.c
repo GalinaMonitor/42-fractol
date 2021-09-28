@@ -4,16 +4,16 @@
 void	init_win_img(t_vars	*vars)
 {
 	vars->mlx_ptr = mlx_init();
-	vars->win_ptr = mlx_new_window(vars->mlx_ptr, 800, 800, "mlx_test");
-	vars->img->img = mlx_new_image(vars->mlx_ptr, 800, 800);
+	vars->win_ptr = mlx_new_window(vars->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "mlx_test");
+	vars->img->img = mlx_new_image(vars->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	vars->img->addr = mlx_get_data_addr(vars->img->img, &vars->img->bits_per_pixel, &vars->img->line_length, &vars->img->endian);
 }
 
 void	default_settings(t_vars	*vars)
 {
-	vars->fractol->calibrate = 100;
-	vars->fractol->iter = 20;
-	vars->fractol->color.color = 0;
+	vars->fractol->calibrate = CALIBRATION_CHANGE_STEP * 5;
+	vars->fractol->iter = ITERATIONS;
+	vars->fractol->color.color = COLOR_PARAM;
 	vars->fractol->move_rl = 0;
 	vars->fractol->move_ud = 0;
 }

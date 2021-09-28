@@ -10,6 +10,20 @@
 #include <pthread.h>
 
 # include <stdint.h>
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
+#define THREAD_WIDTH ( WINDOW_WIDTH / THREADS )
+#define THREADS 8
+#define COLOR_MAIN 0x000000
+#define ITERATIONS 50
+#define MOVE_UD 50
+#define MOVE_RL 50
+
+#define ITERATION_CHANGE_STEP 10
+#define CALIBRATION_CHANGE_STEP 30
+#define ZOOM_PARAM 20
+#define COLOR_PARAM 20
+#define JULIA_PARAM 500
 
 typedef struct	s_data
 {

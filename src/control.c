@@ -7,41 +7,41 @@ int	keyboard_hook(int keybord, t_vars *vars)
 		close_window(vars);
 	if (keybord == KEY_UP)
 	{
-		vars->fractol->move_ud -= 50;
+		vars->fractol->move_ud -= MOVE_UD;
 		vars->fractol_func(vars);
 	}
 	if (keybord == KEY_DOWN)
 	{
-		vars->fractol->move_ud += 50;
+		vars->fractol->move_ud += MOVE_UD;
 		vars->fractol_func(vars);
 	}
 	if (keybord == KEY_RIGHT)
 	{
-		vars->fractol->move_rl -= 50;
+		vars->fractol->move_rl -= MOVE_RL;
 		vars->fractol_func(vars);
 	}
 	if (keybord == KEY_LEFT)
 	{
-		vars->fractol->move_rl += 50;
+		vars->fractol->move_rl += MOVE_RL;
 		vars->fractol_func(vars);
 	}
 	if (keybord == KEY_Z)
 	{
-		vars->fractol->iter -= 10;
-		if (vars->fractol->iter < 10)
-			vars->fractol->iter = 10;
+		vars->fractol->iter -= ITERATION_CHANGE_STEP;
+		if (vars->fractol->iter < ITERATION_CHANGE_STEP)
+			vars->fractol->iter = ITERATION_CHANGE_STEP;
 		vars->fractol_func(vars);
 	}
 	if (keybord == KEY_X)
 	{
-		vars->fractol->iter += 10;
+		vars->fractol->iter += ITERATION_CHANGE_STEP;
 		vars->fractol_func(vars);
 	}
 	if (keybord == KEY_C)
 	{
-		vars->fractol->color.red = rand() % 20;
-		vars->fractol->color.green = rand() % 20;
-		vars->fractol->color.blue = rand() % 20;
+		vars->fractol->color.red = rand() % COLOR_PARAM;
+		vars->fractol->color.green = rand() % COLOR_PARAM;
+		vars->fractol->color.blue = rand() % COLOR_PARAM;
 		vars->fractol_func(vars);
 	}
 	if (keybord == KEY_MINUS)
@@ -58,17 +58,21 @@ int	wheel_hook(int wheel, int x, int y, t_vars *vars)
 	{
 		if (wheel == SCROLL_DOWN)
 		{
-			vars->fractol->calibrate += 30;
-			vars->fractol->move_rl += (400 - x)/10;
-			vars->fractol->move_ud -= (y - 400)/10;
+			vars->fractol->calibrate += CALIBRATION_CHANGE_STEP + (vars->fractol->calibrate / CALIBRATION_CHANGE_STEP);
+			vars->fractol->move_rl += WINDOW_WIDTH/2 - (x + (vars->fractol->calibrate/ZOOM_PARAM));
+			vars->fractol->move_ud -= (y + (vars->fractol->calibrate/ZOOM_PARAM))- WINDOW_HEIGHT/2;
 		}
 		else
 		{
-			vars->fractol->calibrate -= 30;
-			vars->fractol->move_rl += (400 - x)/10;
-			vars->fractol->move_ud -= (y - 400)/10;
-			if (vars->fractol->calibrate < 0)
-				vars->fractol->calibrate = 1;
+			vars->fractol->calibrate -= CALIBRATION_CHANGE_STEP + (vars->fractol->calibrate / CALIBRATION_CHANGE_STEP);
+			vars->fractol->move_rl -= WINDOW_WIDTH/2 - (x + (vars->fractol->calibrate/ZOOM_PARAM));
+			vars->fractol->move_ud += (y + (vars->fractol->calibrate/ZOOM_PARAM))- WINDOW_HEIGHT/2;
+			if (vars->fractol->calibrate < CALIBRATION_CHANGE_STEP)
+			{
+				vars->fractol->calibrate = CALIBRATION_CHANGE_STEP;
+				vars->fractol->move_rl = 0;
+				vars->fractol->move_ud = 0;
+			}
 		}
 		vars->fractol_func(vars);
 	}
@@ -85,8 +89,8 @@ int	close_window(t_vars *vars)
 
 int	motion_hook(int x, int y, t_vars *vars)
 {
-	vars->fractol->mouse_rl = ((double)x - 400)/200;
-	vars->fractol->mouse_ud = (400 - (double)y)/200;
+	vars->fractol->mouse_rl = ((double)x - WINDOW_WIDTH / 2)/JULIA_PARAM;
+	vars->fractol->mouse_ud = (WINDOW_HEIGHT / 2 - (double)y)/JULIA_PARAM;
 	vars->fractol_func(vars);
 	return 0;
 }

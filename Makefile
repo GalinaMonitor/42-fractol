@@ -58,7 +58,7 @@ fclean: clean
 re: fclean all
 
 bonus: $(LIBFT) $(LIBMLX) $(OBJ_BONUS)
-	$(CC) $(OBJ_BONUS) -o $@ $(LDFLAGS) -lpthread
+	$(CC) $(OBJ_BONUS) -o fractol $(LDFLAGS) -lpthread
 	@echo "fractol is ready to use"
 
 

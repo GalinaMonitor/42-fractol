@@ -7,7 +7,7 @@ int	draw_julia(t_vars *vars)
 	double y = 0;
 	double a = 0;
 	double b = 0;
-	int iter = 50;
+	int iter = vars->fractol->iter;
 
 	int red = vars->fractol->color.red;
 	int green = vars->fractol->color.green;
@@ -18,12 +18,12 @@ int	draw_julia(t_vars *vars)
 	t_color color;
 	int callibrate = vars->fractol->calibrate;
 
-	while (x < 800)
+	while (x < WINDOW_WIDTH)
 	{
-		while (y < 800)
+		while (y < WINDOW_HEIGHT)
 		{
-			b = (x - 800/2 - vars->fractol->move_rl)/callibrate;
-			a = (800/2 - y + vars->fractol->move_ud)/callibrate;
+			b = (x - WINDOW_WIDTH/2 - vars->fractol->move_rl)/callibrate;
+			a = (WINDOW_HEIGHT/2 - y + vars->fractol->move_ud)/callibrate;
 			zero.im = a;
 			zero.re = b;
 			num.im = vars->fractol->mouse_ud;
@@ -36,7 +36,7 @@ int	draw_julia(t_vars *vars)
 					break;
 			}
 			if (iter <= 0)
-				my_mlx_pixel_put(vars->img, x, y, 0xFFFFFF);
+				my_mlx_pixel_put(vars->img, x, y, COLOR_MAIN);
 			else
 			{
 				color.red += (iter * red) % 255;
@@ -45,7 +45,7 @@ int	draw_julia(t_vars *vars)
 				my_mlx_pixel_put(vars->img, x, y, color.color);
 				color.color = 0;
 			}
-			iter = 50;
+			iter = vars->fractol->iter;
 			y++;
 		}
 		y = 0;
