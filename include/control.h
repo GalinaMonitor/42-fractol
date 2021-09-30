@@ -14,9 +14,7 @@
 # define SCROLL_UP				4
 # define SCROLL_DOWN			5
 # define KEY_PRESS				2
-# define KEY_RELEASE			3
 # define WHEEL					4
-# define BUTTON_RELEASE			5
 # define MOTION_NOTIFY			6
 # define EXPOSE					12
 # define DESTROY				17
@@ -46,7 +44,6 @@
 # define MASK_POINTER_MOTION	64L
 # define MASK_EXPOSE			32768L
 # define MASK_DESTROY			131072L
-
 # define ZOOM_PLUS				1.2
 # define ZOOM_MINUS				0.8
 # define SHIFT					0.11

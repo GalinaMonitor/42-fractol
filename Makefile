@@ -1,7 +1,8 @@
 NAME = fractol
+NAME_BONUS = fractol_bonus
 CC = gcc
 
-# FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 LDFLAGS = -L$(LIBMLX_DIR) -lmlx -L$(LIBFT_DIR) -lft -framework OpenGL -framework Appkit -O3
 
 LIB_DIR = lib/
@@ -15,8 +16,8 @@ LIBMLX_DIR = mlx/
 LIBFT_DIR = lib/libft/libft/
 LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
 
-FRACTOL_SRC = cmplx_math.c main.c mandelbrot_base.c julia_base.c graphic.c control.c burning_ship.c
-BONUS_SRC = cmplx_math.c main.c mandelbrot.c burning_ship.c julia.c graphic.c control.c
+FRACTOL_SRC = cmplx_math.c main.c graphic.c control.c service.c key_hooks.c formula.c draw_fractal.c
+BONUS_SRC = cmplx_math.c main.c graphic.c control.c service.c key_hooks.c formula.c ../src_bonus/draw_fractal_bonus.c
 FRACTOL_INC = fractol.h
 
 SRC = $(addprefix $(SRC_DIR), $(FRACTOL_SRC))
@@ -30,6 +31,10 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(LIBMLX) $(OBJ)
 	$(CC) $(OBJ) -o $@ $(LDFLAGS) -lpthread
 	@echo "fractol is ready to use"
+
+$(NAME_BONUS): $(LIBFT) $(LIBMLX) $(OBJ_BONUS)
+	$(CC) $(OBJ_BONUS) -o fractol_bonus $(LDFLAGS) -lpthread
+	@echo "fractol_bonus is ready to use"
 
 # $(NAME): $(LIBFT) $(LIBMLX) $(OBJ)
 # 	$(CC) $(OBJ) $(LIBFT) -o  $@ -g -Lmlx_linux -lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
@@ -53,14 +58,10 @@ clean:
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBFT_DIR)
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
-bonus: $(LIBFT) $(LIBMLX) $(OBJ_BONUS)
-	$(CC) $(OBJ_BONUS) -o fractol $(LDFLAGS) -lpthread
-	@echo "fractol is ready to use"
-
-
+bonus: $(NAME_BONUS)
 
 .PHONY : all re fclean clean bonus
