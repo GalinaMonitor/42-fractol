@@ -3,11 +3,10 @@
 
 void	draw_fractal_thread(t_vars *vars)
 {
-
-	int count_iter;
-	double x;
-	double y;
-	int iter;
+	int		count_iter;
+	double	x;
+	double	y;
+	int		iter;
 
 	count_iter = vars->fractol->iter_pthread;
 	vars->fractol->iter_pthread += 1;
@@ -32,10 +31,11 @@ void	draw_fractal_thread(t_vars *vars)
 
 int	draw_fractal(t_vars *vars)
 {
-	int count = 0;
-
-	vars->fractol->iter_pthread = 0;
+	int	count;
 	pthread_t tid[THREADS];
+
+	count = 0;
+	vars->fractol->iter_pthread = 0;
 	while (count < THREADS)
 	{
 		pthread_create(&tid[count], NULL, (void *(*) (void *))draw_fractal_thread, vars);
